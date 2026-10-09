@@ -48,6 +48,25 @@ public class Pokemon {
         this.attacks.clear();
     }
 
+    // Metod för att ta skada säkert
+    public void takeDamage(int amount) {
+        if (amount < 0) {
+            System.out.println("Varning: Skada kan inte vara negativ.");
+            return;
+        }
+        this.currentHp = Math.max(0, this.currentHp - amount);
+    }
+
+    // Kontrollera om Pokemon har svimmat (0 HP)
+    public boolean isFainted() {
+        return this.currentHp == 0;
+    }
+
+    // Kontrollera om Pokemon har attacker
+    public boolean hasAttacks() {
+        return !this.attacks.isEmpty();
+    }
+
     @Override
     public String toString() {
         return String.format("%s [Typ: %s, HP: %d/%d, Attacker: %d/4]",
