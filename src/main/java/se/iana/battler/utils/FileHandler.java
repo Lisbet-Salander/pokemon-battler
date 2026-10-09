@@ -1,4 +1,5 @@
 package se.iana.battler.utils;
+import se.iana.battler.models.BattleStats;
 
 import se.iana.battler.models.Attack;
 import se.iana.battler.models.Pokemon;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class FileHandler {
     private static final Path PATH = Path.of("pokedex.csv");
+    private static final Path STATS_PATH = Path.of("stats.csv");
 
     // Spara till fil
     public static void save(List<Pokemon> pokedex) {
@@ -109,4 +111,44 @@ public class FileHandler {
 
         return seed;
     }
+
+    public static BattleStats loadStats() {
+        // 1. Om filen inte finns än, starta på 0
+        if (!Files.exists(STATS_PATH)) {
+            return new BattleStats(0, 0);
+        }
+
+        try {
+            // 2. Läs filen och dela upp vid kommatecknet
+            String line = Files.readString(STATS_PATH).trim();
+            String[] parts = line.split(",");
+
+            if (parts.length == 2) {
+                int wins = Integer.parseInt(parts[0].trim());
+                int losses = Integer.parseInt(parts[1].trim());
+                return new BattleStats(wins, losses);
+            }
+        } catch (IOException e) {
+            System.out.println("Kunde inte läsa filen.");
+        } catch (NumberFormatException e) {
+            System.out.println("Filen innehöll inte siffror.");
+        }
+
+        // 3. Om något var fel i filen, returnera 0 så programmet inte kraschar
+        return new BattleStats(0, 0);
+    }
+
+    // Spara stridsstatistik till stats.csv
+    public static void saveStats(BattleStats stats) {
+        if (stats == null) {
+            return;
+        }
+        String content = stats.getWins() + "," + stats.getLosses();
+        try {
+            Files.writeString(STATS_PATH, content);
+        } catch (IOException e) {
+            System.out.println("Fel: Kunde inte spara statistik till filen (" + e.getMessage() + ")");
+        }
+    }
+
 }
