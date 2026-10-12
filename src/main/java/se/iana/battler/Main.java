@@ -1,5 +1,6 @@
 package se.iana.battler;
 
+import se.iana.battler.models.BattleStats;
 import se.iana.battler.services.PokedexManager;
 import se.iana.battler.utils.FileHandler;
 import se.iana.battler.utils.InputHelper;
@@ -13,6 +14,9 @@ public class Main {
         // Ladda filen eller generera initial data (Seeding) vid start
         PokedexManager manager = new PokedexManager(FileHandler.loadOrSeed());
 
+        // Laddar stridsstatistik vid start
+        BattleStats stats = FileHandler.loadStats();
+
         boolean running = true;
         System.out.println("Välkommen till Pokedex!");
 
@@ -20,7 +24,7 @@ public class Main {
             printMenu();
 
             // Skydd mot inmatning av ogiltiga menyval
-            int choice = InputHelper.readInt(scanner, "Välj (1-8): ", 1, 8);
+            int choice = InputHelper.readInt(scanner, "Välj (1-10): ", 1, 10);
 
             switch (choice) {
                 case 1 -> manager.viewAll();
@@ -40,8 +44,11 @@ public class Main {
                     manager = new PokedexManager(FileHandler.generateSeedData());
                     System.out.println("Pokedex har återställts till startdata!");
                 }
-                case 8 -> {
+                case 8 -> System.out.println("Stridssystemet byggs just nu! Kommer i nästa steg."); // Nytt menyval
+                case 9 -> System.out.println("Statistik: " + stats.toString()); // Nytt menyval
+                case 10 -> {
                     FileHandler.save(manager.getPokedex());
+                    FileHandler.saveStats(stats); // Sparar statistiken när vi avslutar
                     System.out.println("Data sparad. Hej då!");
                     running = false;
                 }
@@ -58,6 +65,8 @@ public class Main {
         System.out.println("5. Spara till fil (manuellt)");
         System.out.println("6. Ladda från fil (manuellt)");
         System.out.println("7. Återställ till seedad data");
-        System.out.println("8. Avsluta och spara");
+        System.out.println("8. Starta strid"); // Nytt menyval
+        System.out.println("9. Stridsresultat"); // Nytt menyval
+        System.out.println("10. Avsluta och spara");
     }
 }

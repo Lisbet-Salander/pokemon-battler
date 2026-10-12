@@ -6,6 +6,7 @@ import se.iana.battler.models.Type;
 
 import java.util.Random;
 
+// Serviceklass som hanterar logik relaterad till strider
 public class BattleService {
     private static final Random random = new Random();
 
@@ -18,7 +19,7 @@ public class BattleService {
         int index = random.nextInt(names.length);
         Pokemon wild = new Pokemon(names[index], types[index], hps[index], hps[index]);
 
-        // Ger datorns Pokémon en slumpmässig attack
+        // Ger datorns Pokemon en slumpmässig attack
         wild.addAttack(new Attack("Tackle", 20, 100, Type.NORMAL));
 
         return wild;
