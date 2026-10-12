@@ -1,6 +1,7 @@
 package se.iana.battler;
 
 import se.iana.battler.models.BattleStats;
+import se.iana.battler.services.BattleService;
 import se.iana.battler.services.PokedexManager;
 import se.iana.battler.utils.FileHandler;
 import se.iana.battler.utils.InputHelper;
@@ -16,6 +17,9 @@ public class Main {
 
         // Laddar stridsstatistik vid start
         BattleStats stats = FileHandler.loadStats();
+
+        // Skapa BattleService
+        BattleService battleService = new BattleService();
 
         boolean running = true;
         System.out.println("Välkommen till Pokedex!");
@@ -44,8 +48,7 @@ public class Main {
                     manager = new PokedexManager(FileHandler.generateSeedData());
                     System.out.println("Pokedex har återställts till startdata!");
                 }
-                case 8 -> System.out.println("Stridssystemet byggs just nu! Kommer i nästa steg."); // Nytt menyval
-                case 9 -> System.out.println("Statistik: " + stats.toString()); // Nytt menyval
+                case 8 -> battleService.startBattle(manager.getPokedex(), stats, scanner);                case 9 -> System.out.println("Statistik: " + stats.toString()); // Nytt menyval
                 case 10 -> {
                     FileHandler.save(manager.getPokedex());
                     FileHandler.saveStats(stats); // Sparar statistiken när vi avslutar
