@@ -48,7 +48,8 @@ public class Main {
                     manager = new PokedexManager(FileHandler.generateSeedData());
                     System.out.println("Pokedex har återställts till startdata!");
                 }
-                case 8 -> battleService.startBattle(manager.getPokedex(), stats, scanner);                case 9 -> System.out.println("Statistik: " + stats.toString()); // Nytt menyval
+                case 8 -> battleService.startBattle(manager.getPokedex(), stats, scanner);
+                case 9 -> System.out.println("Statistik: " + stats.toString()); // Nytt menyval
                 case 10 -> {
                     FileHandler.save(manager.getPokedex());
                     FileHandler.saveStats(stats); // Sparar statistiken när vi avslutar

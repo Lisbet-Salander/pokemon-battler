@@ -7,8 +7,7 @@ public class InputHelper {
     // Metod för att säkert läsa in ett heltal inom ett specifikt intervall
     public static int readInt(Scanner scanner, String prompt, int min, int max) {
         while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine().trim();
+            String input = readLine(scanner, prompt);
 
             if (input.isBlank()) {
                 System.out.println("Fel: inmatningen får inte vara tom.");
@@ -33,8 +32,7 @@ public class InputHelper {
     // Metod för att säkert läsa in text som inte är tom och inte för lång
     public static String readString(Scanner scanner, String prompt, int maxLength) {
         while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine().trim();
+            String input = readLine(scanner, prompt);
 
             if (input.isBlank()) {
                 System.out.println("Fel: texten får inte vara tom.");
@@ -44,8 +42,18 @@ public class InputHelper {
                 System.out.printf("Fel: texten är för lång (max %d tecken).%n", maxLength);
                 continue;
             }
-
             return input;
         }
+    }
+    // Läser en rad och hanterar när inmatningen tar slut (EOF)
+    private static String readLine(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+
+        if (scanner == null || !scanner.hasNextLine()) {
+            System.out.println("\nInmatningen tog slut. Programmet avslutas.");
+            System.exit(0);
+            return ""; // Krävs av kompilatorn; nås normalt inte efter System.exit.
+        }
+        return scanner.nextLine().trim();
     }
 }

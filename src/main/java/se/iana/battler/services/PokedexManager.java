@@ -97,7 +97,7 @@ public class PokedexManager {
 
             if (add == 1) {
                 String aName = InputHelper.readString(scanner, "Attackens namn: ", 30);
-                int dmg = InputHelper.readInt(scanner, "Skada (0-200): ", 0, 200);
+                int dmg = InputHelper.readInt(scanner, "Skada (1-200): ", 1, 200);
                 int acc = InputHelper.readInt(scanner, "Träffsäkerhet (1-100): ", 1, 100);
                 Type aType = selectType(scanner);
 
