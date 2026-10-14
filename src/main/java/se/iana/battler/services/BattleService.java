@@ -24,8 +24,9 @@ public class BattleService {
         int index = random.nextInt(names.length);
         Pokemon wild = new Pokemon(names[index], types[index], hps[index], hps[index]);
 
-        // Ger datorns Pokemon en slumpmässig attack
+        // Ger den vilda Pokemon två attacker
         wild.addAttack(new Attack("Tackle", 20, 100, Type.NORMAL));
+        wild.addAttack(new Attack("Quick Attack", 15, 100, Type.NORMAL));
 
         return wild;
     }
@@ -46,13 +47,13 @@ public class BattleService {
         int choice = InputHelper.readInt(scanner, "Välj en Pokemon (1-" + pokedex.size() + "): ", 1, pokedex.size());
         Pokemon playerPokemon = pokedex.get(choice - 1);
 
-        // Kraschtest: Starta strid med en Pokemon som har 0 hp
+        // Starta strid med en Pokemon som har 0 hp
         if (playerPokemon.isFainted()) {
             System.out.println("Fel: Denna Pokemon har 0 HP och kan inte slåss!");
             return;
         }
 
-        // Kraschtest: Starta strid med en Pokemon som har 0 attacker
+        // Starta strid med en Pokemon som har 0 attacker
         if (!playerPokemon.hasAttacks()) {
             System.out.println("Fel: Denna Pokémon har inga attacker och kan inte slåss!");
             return;
